@@ -112,20 +112,18 @@
         const card = document.createElement('div');
         card.className = 'product-card';
         let imageHTML = '';
+              const productIndex = products.findIndex(p => p.name === product.name);
+      const uploadedImages = JSON.parse(localStorage.getItem('product_images') || '{}');
+      const uploadedImg = uploadedImages[productIndex];
         
-        if (product.hasImage) {
-          imageHTML = `<img src="${burgerImages[product.hasImage]}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\"font-size:3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);\">\ud83c\udf54</div>'">`;
-        } else {
-          imageHTML = `<div style="font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${product.icon}</div>`;
-        }
         
-        card.innerHTML = `
-          <div class="product-image">
-            ${imageHTML}
-          </div>
-          <div class="product-info">
-            <div class="product-category">${product.category}</div>
-            <div class="product-name">${product.name}</div>
+        if (uploadedImg) {
+                  imageHTML = `<img src="${uploadedImg}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;" />`;
+      } else if (product.hasImage) {
+                } else {
+          
+          
+                  imageHTML = `<img src="${burgerImages[product.hasImage]}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\"font-size:3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);\">\ud83c\udf54</div>'">`;
             <div class="product-price">${product.price}</div>
           </div>
         `;
