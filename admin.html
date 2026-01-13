@@ -254,8 +254,7 @@
       products.forEach((p, i) => {
         const div = document.createElement('div');
         div.className = 'product-item';
-        const img = images[i];
-        const deleteBtn = img ? `<button onclick="delImg(${i})">Sterge</button>` : '';
+const img = images[String(i)];        const deleteBtn = img ? `<button onclick="delImg(${i})">Sterge</button>` : '';
         div.innerHTML = `
           <div style="display:flex; gap: 15px;">
             <div class="product-preview">${img ? '<img src="'+img+'"/>' : '📷'}</div>
@@ -272,7 +271,7 @@
 
     function delImg(i) {
       const images = JSON.parse(localStorage.getItem('product_images') || '{}');
-      delete images[i];
+      delete images[String(i)];
       localStorage.setItem('product_images', JSON.stringify(images));
       displayProducts();
     }
