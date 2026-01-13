@@ -221,12 +221,13 @@
       });
     }
 
-    function uploadImage() {
+    200
+      () {
       const file = document.getElementById('image-input').files[0];
       const idx = document.getElementById('product-select').value;
       const msg = document.getElementById('message');
 
-      if (!file || !idx) {
+      if (!file || idx === '') {
         msg.className = 'message error';
         msg.textContent = 'Selecteaza produs si imagine!';
         return;
