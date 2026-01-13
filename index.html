@@ -22,7 +22,7 @@
     .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; padding: 2rem; max-width: 1400px; margin: 0 auto; }
     .product-card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); transition: all 0.3s; }
     .product-card:hover { transform: translateY(-10px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-    .product-image { width: 100%; height: 200px; background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white; overflow: hidden; object-fit: cover; }
+    .product-image { width: 100%; height: 200px; background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .product-image img { width: 100%; height: 100%; object-fit: cover; }
     .product-info { padding: 1.5rem; }
     .product-name { font-size: 1.1rem; font-weight: bold; margin-bottom: 0.3rem; color: #333; }
@@ -36,7 +36,7 @@
 <body>
   <nav>
     <div class="logo">🍔 SMASH & CHIPS</div>
-    <button onclick="alert('Multilingv soon - RO/EN support coming')">EN / RO</button>
+    <button onclick="alert('Multi-language support - RO/EN coming soon')">EN / RO</button>
   </nav>
 
   <div class="hero">
@@ -68,32 +68,40 @@
   <script>
     const products = [
       // BURGERS
-      { name: 'CLASSIC SMASHED', category: 'BURGER', price: 'LEI 35.00', image: 'https://imgur.com/siKS9yv.jpg' },
-      { name: 'CLASSIC DOUBLE SMASHED', category: 'BURGER', price: 'LEI 45.00', image: 'https://imgur.com/siKS9yv.jpg' },
-      { name: 'IUTE-N GURA', category: 'BURGER', price: 'LEI 35.00', image: 'https://i.imgur.com/5qW8R3L.jpg' },
-      { name: 'BBQ BACON', category: 'BURGER', price: 'LEI 38.00', image: 'https://i.imgur.com/8k0wQ2J.jpg' },
-      { name: 'BBQ BACON DOUBLE SMASHED', category: 'BURGER', price: 'LEI 49.00', image: 'https://i.imgur.com/8k0wQ2J.jpg' },
-      { name: 'DOUBLE IUTE-N GURA', category: 'BURGER', price: 'LEI 45.00', image: 'https://i.imgur.com/5qW8R3L.jpg' },
-      { name: 'DOUBLE CHAMPIGNON BLUES', category: 'BURGER', price: 'LEI 48.00', image: 'https://imgur.com/siKS9yv.jpg' },
-      { name: 'CHAMPIGNON BLUES', category: 'BURGER', price: 'LEI 37.00', image: 'https://imgur.com/siKS9yv.jpg' },
+      { name: 'CLASSIC SMASHED', category: 'BURGER', price: 'LEI 35.00', hasImage: 1 },
+      { name: 'CLASSIC DOUBLE SMASHED', category: 'BURGER', price: 'LEI 45.00', hasImage: 2 },
+      { name: 'IUTE-N GURA', category: 'BURGER', price: 'LEI 35.00', hasImage: 3 },
+      { name: 'BBQ BACON', category: 'BURGER', price: 'LEI 38.00', hasImage: 1 },
+      { name: 'BBQ BACON DOUBLE SMASHED', category: 'BURGER', price: 'LEI 49.00', hasImage: 2 },
+      { name: 'DOUBLE IUTE-N GURA', category: 'BURGER', price: 'LEI 45.00', hasImage: 3 },
+      { name: 'DOUBLE CHAMPIGNON BLUES', category: 'BURGER', price: 'LEI 48.00', hasImage: 4 },
+      { name: 'CHAMPIGNON BLUES', category: 'BURGER', price: 'LEI 37.00', hasImage: 5 },
       // BAUTURI
-      { name: 'COCA COLA ZERO 0.33L', category: 'BAUTURI', price: 'LEI 8.00', image: '🥤' },
-      { name: 'URSUS 0.33L', category: 'BAUTURI', price: 'LEI 10.00', image: '🥤' },
-      { name: 'APA DORNA MIN 0.5L', category: 'BAUTURI', price: 'LEI 7.00', image: '💧' },
-      { name: 'APA DORNA PLATA 0.5L', category: 'BAUTURI', price: 'LEI 7.00', image: '💧' },
+      { name: 'COCA COLA ZERO 0.33L', category: 'BAUTURI', price: 'LEI 8.00', icon: '🥤' },
+      { name: 'URSUS 0.33L', category: 'BAUTURI', price: 'LEI 10.00', icon: '🥤' },
+      { name: 'APA DORNA MIN 0.5L', category: 'BAUTURI', price: 'LEI 7.00', icon: '💧' },
+      { name: 'APA DORNA PLATA 0.5L', category: 'BAUTURI', price: 'LEI 7.00', icon: '💧' },
       // SOSURI
-      { name: 'SOS DE USTUROI', category: 'SOS', price: 'LEI 6.00', image: '🥫' },
-      { name: 'EXTRA SOS BURGER', category: 'SOS', price: 'LEI 7.00', image: '🥫' },
-      { name: 'BBQ CHIPOTLE', category: 'SOS', price: 'LEI 7.00', image: '🥫' },
-      { name: 'EXTRA SOS SRIRACHA HONEY', category: 'SOS', price: 'LEI 7.00', image: '🥫' },
-      { name: 'EXTRA SOS BLUE CHEESE', category: 'SOS', price: 'LEI 6.00', image: '🥫' },
+      { name: 'SOS DE USTUROI', category: 'SOS', price: 'LEI 6.00', icon: '🥫' },
+      { name: 'EXTRA SOS BURGER', category: 'SOS', price: 'LEI 7.00', icon: '🥫' },
+      { name: 'BBQ CHIPOTLE', category: 'SOS', price: 'LEI 7.00', icon: '🥫' },
+      { name: 'EXTRA SOS SRIRACHA HONEY', category: 'SOS', price: 'LEI 7.00', icon: '🥫' },
+      { name: 'EXTRA SOS BLUE CHEESE', category: 'SOS', price: 'LEI 6.00', icon: '🥫' },
       // CARTOFI
-      { name: 'CARTOFI', category: 'CARTOFI', price: 'LEI 12.99', image: '🍟' },
-      { name: 'Cartofi cu usturoi, pătrunjel, parmezan si bacon', category: 'CARTOFI', price: 'LEI 19.50', image: '🍟' },
-      { name: 'Cartofi cu usturoi, pătrunjel si parmezan', category: 'CARTOFI', price: 'LEI 17.00', image: '🍟' },
-      { name: 'Cartofi cu musliș și brânză', category: 'CARTOFI', price: 'LEI 18.00', image: '🍟' },
-      { name: 'Cartofi clasici', category: 'CARTOFI', price: 'LEI 11.50', image: '🍟' }
+      { name: 'CARTOFI', category: 'CARTOFI', price: 'LEI 12.99', icon: '🍟' },
+      { name: 'Cartofi cu usturoi, pătrunjel, parmezan si bacon', category: 'CARTOFI', price: 'LEI 19.50', icon: '🍟' },
+      { name: 'Cartofi cu usturoi, pătrunjel si parmezan', category: 'CARTOFI', price: 'LEI 17.00', icon: '🍟' },
+      { name: 'Cartofi cu musliș și brânză', category: 'CARTOFI', price: 'LEI 18.00', icon: '🍟' },
+      { name: 'Cartofi clasici', category: 'CARTOFI', price: 'LEI 11.50', icon: '🍟' }
     ];
+
+    const burgerImages = {
+      1: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80',
+      2: 'https://images.unsplash.com/photo-1550547990-5343cba999c0?w=300&q=80',
+      3: 'https://images.unsplash.com/photo-1586190936529-385fbf5ac382?w=300&q=80',
+      4: 'https://images.unsplash.com/photo-1529275335684-642cf05ee69d?w=300&q=80',
+      5: 'https://images.unsplash.com/photo-1500505052614-13dd332aa84e?w=300&q=80'
+    };
 
     function renderProducts(filter = 'all') {
       const grid = document.getElementById('productsGrid');
@@ -103,9 +111,14 @@
       filtered.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
-        const imageHTML = typeof product.image === 'string' && product.image.startsWith('http') 
-          ? `<img src="${product.image}" alt="${product.name}" onerror="this.style.display='none'">`
-          : `<div style="font-size: 4rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${product.image}</div>`;
+        let imageHTML = '';
+        
+        if (product.hasImage) {
+          imageHTML = `<img src="${burgerImages[product.hasImage]}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;" onerror="this.parentElement.innerHTML='<div style=\"font-size:3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);\">\ud83c\udf54</div>'">`;
+        } else {
+          imageHTML = `<div style="font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">${product.icon}</div>`;
+        }
+        
         card.innerHTML = `
           <div class="product-image">
             ${imageHTML}
