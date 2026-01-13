@@ -215,7 +215,7 @@
       select.innerHTML = '<option value="">Alege un produs...</option>';
       products.forEach((p, i) => {
         const option = document.createElement('option');
-        option.value = i;
+        option.value = String(i);
         option.textContent = p.name + ' - ' + p.price;
         select.appendChild(option);
       });
