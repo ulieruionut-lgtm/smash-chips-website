@@ -278,10 +278,10 @@ const img = images[String(i)];        const deleteBtn = img ? `<button onclick="
 
     window.addEventListener('load', () => {
       if (localStorage.getItem('adminLogged') === 'true') {
-        document.getElementById('admin-password').value = '';
-        login();
-      }
-    });
+isLoggedIn = true;
+        document.getElementById('login-section').classList.add('hidden');
+        document.getElementById('admin-section').classList.remove('hidden');
+        loadProducts();    });
   </script>
 </body>
 </html>
