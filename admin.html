@@ -224,6 +224,7 @@
     function uploadImage  () {
       const file = document.getElementById('image-input').files[0];
       const idx = document.getElementById('product-select').value;
+       console.log('Selected product:', idx);
       const msg = document.getElementById('message');
 
       if (!file || idx === '') {
