@@ -61,7 +61,7 @@
   </div>
 
   <script>
-    const ADMIN_PASSWORD = ''admin2024'';
+        const ADMIN_PASSWORD = 'admin2024';
     let isLoggedIn = false;
     let products = [];
     let messageTimeout = null;
@@ -159,8 +159,7 @@ function loadProducts() {
     }
 
     reader.readAsDataURL(file);
-  }    }
-
+  }    
     function displayProducts() {
       const images = JSON.parse(localStorage.getItem('product_images') || '{}');
       const container = document.getElementById('products-container');
