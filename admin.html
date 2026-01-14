@@ -143,12 +143,10 @@
         images[idx] = e.target.result;
         localStorage.setItem('product_images', JSON.stringify(images));
         showMessage('Imagine incarcata!', 'success');
-    displayProducts(); document.getElementById('image-input').value = '';
-      };
+    setTimeout(() => { displayProducts(); document.getElementById('image-input').value = ''; }, 100);      };
       
       reader.onerror = () => {
-        console.error('FileReader error');
-        showMessage('Error reading file!', 'error');
+    displayProducts(); const frm = document.createElement('form'); document.getElementById('image-input').parentNode.appendChild(frm); frm.appendChild(document.getElementById('image-input')); frm.reset(); document.querySelector('.upload-form').appendChild(document.getElementById('image-input'));        showMessage('Error reading file!', 'error');
       };
       
       reader.readAsDataURL(file);
