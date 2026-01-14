@@ -109,7 +109,7 @@
       select.innerHTML = '<option value="">Alege un produs...</option>';
       products.forEach((p, i) => {
         const option = document.createElement('option');
-        option.value = String(i);
+        option.value = i;
         option.textContent = p.name + ' - ' + p.price;
         select.appendChild(option);
       });
@@ -117,25 +117,20 @@
 
     function uploadImage() {
       const file = document.getElementById('image-input').files[0];
-      const idx = String(document.getElementById('product-select').value);
+      const selectVal = document.getElementById('product-select').value;
       const msg = document.getElementById('message');
       
-      console.log('Upload started - File:', file ? file.name : 'none', 'Index:', idx);
-      
-      if (!file || idx === '') {
+      if (!file || selectVal === '') {
         msg.className = 'message error';
         msg.textContent = 'Selecteaza produs si imagine!';
-        console.log('Validation failed');
         return;
       }
       
+      const idx = String(selectVal);
       const reader = new FileReader();
       reader.onload = (e) => {
-        console.log('File read complete');
         const images = JSON.parse(localStorage.getItem('product_images') || '{}');
-        console.log('Current images:', images);
         images[idx] = e.target.result;
-        console.log('Saving image for index:', idx);
         localStorage.setItem('product_images', JSON.stringify(images));
         msg.className = 'message success';
         msg.textContent = 'Imagine incarcata!';
@@ -143,7 +138,6 @@
         displayProducts();
       };
       reader.onerror = () => {
-        console.error('FileReader error');
         msg.className = 'message error';
         msg.textContent = 'Error reading file!';
       };
@@ -157,8 +151,8 @@
       products.forEach((p, i) => {
         const div = document.createElement('div');
         div.className = 'product-item';
-        const imgKey = String(i);
-        const img = images[imgKey];
+        const idx = String(i);
+        const img = images[idx];
         const deleteBtn = img ? `<button onclick="delImg(${i})">Sterge</button>` : '';
         div.innerHTML = `
           <div style="display:flex; gap: 15px;">
@@ -176,8 +170,8 @@
 
     function delImg(i) {
       const images = JSON.parse(localStorage.getItem('product_images') || '{}');
-      const imgKey = String(i);
-      delete images[imgKey];
+      const idx = String(i);
+      delete images[idx];
       localStorage.setItem('product_images', JSON.stringify(images));
       displayProducts();
     }
