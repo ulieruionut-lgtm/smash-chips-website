@@ -64,6 +64,7 @@
     const ADMIN_PASSWORD = 'admin';
     let isLoggedIn = false;
     let products = [];
+    let messageTimeout = null;
 
     function login() {
       const password = document.getElementById('admin-password').value;
@@ -98,9 +99,7 @@
         })
         .catch(e => {
           console.error('Error:', e);
-          const msg = document.getElementById('message');
-          msg.className = 'message error';
-          msg.textContent = 'Error loading products!';
+          showMessage('Error loading products!', 'error');
         });
     }
 
@@ -115,14 +114,24 @@
       });
     }
 
+    function showMessage(text, type) {
+      const msg = document.getElementById('message');
+      msg.className = 'message ' + type;
+      msg.textContent = text;
+      
+      if (messageTimeout) clearTimeout(messageTimeout);
+      messageTimeout = setTimeout(() => {
+        msg.className = 'message';
+        msg.textContent = '';
+      }, 2000);
+    }
+
     function uploadImage() {
       const file = document.getElementById('image-input').files[0];
       const selectVal = document.getElementById('product-select').value;
-      const msg = document.getElementById('message');
       
       if (!file || selectVal === '') {
-        msg.className = 'message error';
-        msg.textContent = 'Selecteaza produs si imagine!';
+        showMessage('Selecteaza produs si imagine!', 'error');
         return;
       }
       
@@ -133,16 +142,14 @@
         const images = JSON.parse(localStorage.getItem('product_images') || '{}');
         images[idx] = e.target.result;
         localStorage.setItem('product_images', JSON.stringify(images));
-        msg.className = 'message success';
-        msg.textContent = 'Imagine incarcata!';
+        showMessage('Imagine incarcata!', 'success');
         document.getElementById('image-input').value = '';
         displayProducts();
       };
       
       reader.onerror = () => {
         console.error('FileReader error');
-        msg.className = 'message error';
-        msg.textContent = 'Error reading file!';
+        showMessage('Error reading file!', 'error');
       };
       
       reader.readAsDataURL(file);
