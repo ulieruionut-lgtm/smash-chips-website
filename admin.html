@@ -89,19 +89,23 @@
       document.getElementById('admin-section').classList.add('hidden');
     }
 
-    function loadProducts() {
-      fetch('products.json')
-        .then(r => r.json())
-        .then(data => {
-          products = data;
-          populateSelect();
-          displayProducts();
-        })
-        .catch(e => {
-          console.error('Error:', e);
-          showMessage('Error loading products!', 'error');
-        });
-    }
+function loadProducts() {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    fetch('products.json', { signal: controller.signal })
+    .then(r => r.json())
+    .then(data => {
+        clearTimeout(timeout);
+        products = data;
+        populateSelect();
+        displayProducts();
+    })
+    .catch(e => {
+        clearTimeout(timeout);
+        console.error('Error:', e);
+        showMessage('Error loading products!', 'error');
+    });
+}
 
     function populateSelect() {
       const select = document.getElementById('product-select');
