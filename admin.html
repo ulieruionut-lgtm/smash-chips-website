@@ -130,36 +130,66 @@ function loadProducts() {
       }, 2000);
     }
 
-    function uploadImage() {
-      const file = document.getElementById('image-input').files[0];
-      const selectVal = document.getElementById('product-select').value;
+function uploadImage() {
+    const file = document.getElementById('image-input').files[0];
+    const selectVal = document.getElementById('product-select').value;
+    
+    if (!file || selectVal === '') {
+      showMessage('Selecteaza produs si imagine!', 'error');
+      return;
+    }
+    
+    const idx = String(selectVal);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    
+    img.onload = () => {
+      // Compress: max 800px width/height
+      let width = img.width;
+      let height = img.height;
+      const maxSize = 800;
       
-      if (!file || selectVal === '') {
-        showMessage('Selecteaza produs si imagine!', 'error');
-        return;
+      if (width > maxSize || height > maxSize) {
+        if (width > height) {
+          height = (height / width) * maxSize;
+          width = maxSize;
+        } else {
+          width = (width / height) * maxSize;
+          height = maxSize;
+        }
       }
       
-      const idx = String(selectVal);
-      const reader = new FileReader();
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
       
-      reader.onload = (e) => {
-        const images = JSON.parse(localStorage.getItem('product_images') || '{}');
-        images[idx] = e.target.result;
+      // Convert to base64 with 0.7 quality
+      const compressedData = canvas.toDataURL('image/jpeg', 0.7);
+      
+      const images = JSON.parse(localStorage.getItem('product_images') || '{}');
+      images[idx] = compressedData;
+      
+      try {
         localStorage.setItem('product_images', JSON.stringify(images));
         showMessage('Imagine incarcata!', 'success');
-      displayProducts();
-      const oldInp = document.getElementById('image-input');
-      const newInp = oldInp.cloneNode();
-      newInp.value = '';
-      oldInp.replaceWith(newInp);
-    }
-
-    reader.onerror = () => {
+        displayProducts();
+        
+        const oldInp = document.getElementById('image-input');
+        const newInp = oldInp.cloneNode();
+        newInp.value = '';
+        oldInp.replaceWith(newInp);
+      } catch(e) {
+        showMessage('Eroare: Imagine prea mare!', 'error');
+      }
+    };
+    
+    img.onerror = () => {
       showMessage('Error reading file!', 'error');
-    }
-
-    reader.readAsDataURL(file);
-  }    
+    };
+    
+    img.src = URL.createObjectURL(file);
+  }
     function displayProducts() {
       const images = JSON.parse(localStorage.getItem('product_images') || '{}');
       const container = document.getElementById('products-container');
