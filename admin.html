@@ -147,6 +147,7 @@ function loadProducts() {
         images[idx] = e.target.result;
         localStorage.setItem('product_images', JSON.stringify(images));
         showMessage('Imagine incarcata!', 'success');
+            }
     displayProducts(); const oldInp = document.getElementById('image-input'); const newInp = oldInp.cloneNode(); newInp.value = ''; oldInp.replaceWith(newInp);      
       reader.onerror = () => {
     displayProducts(); const frm = document.createElement('form'); document.getElementById('image-input').parentNode.appendChild(frm); frm.appendChild(document.getElementById('image-input')); frm.reset(); document.querySelector('.upload-form').appendChild(document.getElementById('image-input'));        showMessage('Error reading file!', 'error');
