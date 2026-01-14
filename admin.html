@@ -147,12 +147,19 @@ function loadProducts() {
         images[idx] = e.target.result;
         localStorage.setItem('product_images', JSON.stringify(images));
         showMessage('Imagine incarcata!', 'success');
-    displayProducts(); const oldInp = document.getElementById('image-input'); const newInp = oldInp.cloneNode(); newInp.value = ''; oldInp.replaceWith(newInp);      
-      reader.onerror = () => {
-    displayProducts(); const frm = document.createElement('form'); document.getElementById('image-input').parentNode.appendChild(frm); frm.appendChild(document.getElementById('image-input')); frm.reset(); document.querySelector('.upload-form').appendChild(document.getElementById('image-input'));        showMessage('Error reading file!', 'error');
-    displayProducts(); const inp = document.getElementById('image-input'); const newInp = document.createElement('input'); newInp.type = 'file'; newInp.id = 'image-input'; newInp.accept = 'image/*'; inp.replaceWith(newInp);      
-      reader.readAsDataURL(file);
+      displayProducts();
+      const oldInp = document.getElementById('image-input');
+      const newInp = oldInp.cloneNode();
+      newInp.value = '';
+      oldInp.replaceWith(newInp);
     }
+
+    reader.onerror = () => {
+      showMessage('Error reading file!', 'error');
+    }
+
+    reader.readAsDataURL(file);
+  }    }
 
     function displayProducts() {
       const images = JSON.parse(localStorage.getItem('product_images') || '{}');
