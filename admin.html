@@ -53,7 +53,9 @@
       </div>
       <div class="form-group">
         <label>Alege imaginea:</label>
-        <input type="file" id="image-input" accept="image/*">
+        <div id="image-input-wrapper">
+          <input type="file" id="image-input" accept="image/*">
+        </div>
       </div>
       <button onclick="uploadImage()">Incarca Imagine</button>
     </div>
@@ -115,6 +117,16 @@
       });
     }
 
+    function resetFileInput() {
+      const wrapper = document.getElementById('image-input-wrapper');
+      const oldInput = document.getElementById('image-input');
+      const newInput = document.createElement('input');
+      newInput.type = 'file';
+      newInput.id = 'image-input';
+      newInput.accept = 'image/*';
+      wrapper.replaceChild(newInput, oldInput);
+    }
+
     function uploadImage() {
       const file = document.getElementById('image-input').files[0];
       const selectVal = document.getElementById('product-select').value;
@@ -134,7 +146,7 @@
         localStorage.setItem('product_images', JSON.stringify(images));
         msg.className = 'message success';
         msg.textContent = 'Imagine incarcata!';
-        document.getElementById('image-input').value = '';
+        resetFileInput();
         displayProducts();
       };
       reader.onerror = () => {
