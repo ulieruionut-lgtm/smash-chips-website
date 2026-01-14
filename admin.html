@@ -5,32 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel - SMASH & CHIPS</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f5f5f5;
-      padding: 20px;
-    }
-    .login-container {
-      max-width: 400px;
-      margin: 50px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .admin-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f5f5; padding: 20px; }
+    .login-container { max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .admin-container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
     h1 { color: #ff6b35; margin-bottom: 30px; }
     h2 { color: #333; margin: 20px 0 10px 0; }
     .form-group { margin-bottom: 15px; }
@@ -139,22 +117,35 @@
 
     function uploadImage() {
       const file = document.getElementById('image-input').files[0];
-      const idx = document.getElementById('product-select').value;
+      const idx = String(document.getElementById('product-select').value);
       const msg = document.getElementById('message');
+      
+      console.log('Upload started - File:', file ? file.name : 'none', 'Index:', idx);
+      
       if (!file || idx === '') {
         msg.className = 'message error';
         msg.textContent = 'Selecteaza produs si imagine!';
+        console.log('Validation failed');
         return;
       }
+      
       const reader = new FileReader();
       reader.onload = (e) => {
+        console.log('File read complete');
         const images = JSON.parse(localStorage.getItem('product_images') || '{}');
+        console.log('Current images:', images);
         images[idx] = e.target.result;
+        console.log('Saving image for index:', idx);
         localStorage.setItem('product_images', JSON.stringify(images));
         msg.className = 'message success';
         msg.textContent = 'Imagine incarcata!';
         document.getElementById('image-input').value = '';
         displayProducts();
+      };
+      reader.onerror = () => {
+        console.error('FileReader error');
+        msg.className = 'message error';
+        msg.textContent = 'Error reading file!';
       };
       reader.readAsDataURL(file);
     }
@@ -166,7 +157,8 @@
       products.forEach((p, i) => {
         const div = document.createElement('div');
         div.className = 'product-item';
-        const img = images[String(i)];
+        const imgKey = String(i);
+        const img = images[imgKey];
         const deleteBtn = img ? `<button onclick="delImg(${i})">Sterge</button>` : '';
         div.innerHTML = `
           <div style="display:flex; gap: 15px;">
@@ -184,7 +176,8 @@
 
     function delImg(i) {
       const images = JSON.parse(localStorage.getItem('product_images') || '{}');
-      delete images[String(i)];
+      const imgKey = String(i);
+      delete images[imgKey];
       localStorage.setItem('product_images', JSON.stringify(images));
       displayProducts();
     }
