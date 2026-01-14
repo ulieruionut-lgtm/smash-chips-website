@@ -73,7 +73,7 @@ function login() {
       localStorage.setItem('adminLogged', 'true');
       document.getElementById('login-section').classList.add('hidden');
       document.getElementById('admin-section').classList.remove('hidden');
-      loadProducts();
+      setTimeout(loadProducts, 0);
     } else {
       const msg = document.getElementById('login-message');
       msg.className = 'message error';
