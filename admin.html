@@ -53,9 +53,7 @@
       </div>
       <div class="form-group">
         <label>Alege imaginea:</label>
-        <div id="image-input-wrapper">
-          <input type="file" id="image-input" accept="image/*">
-        </div>
+        <input type="file" id="image-input" accept="image/*">
       </div>
       <button onclick="uploadImage()">Incarca Imagine</button>
     </div>
@@ -117,16 +115,6 @@
       });
     }
 
-    function resetFileInput() {
-      const wrapper = document.getElementById('image-input-wrapper');
-      const oldInput = document.getElementById('image-input');
-      const newInput = document.createElement('input');
-      newInput.type = 'file';
-      newInput.id = 'image-input';
-      newInput.accept = 'image/*';
-      wrapper.replaceChild(newInput, oldInput);
-    }
-
     function uploadImage() {
       const file = document.getElementById('image-input').files[0];
       const selectVal = document.getElementById('product-select').value;
@@ -140,19 +128,23 @@
       
       const idx = String(selectVal);
       const reader = new FileReader();
+      
       reader.onload = (e) => {
         const images = JSON.parse(localStorage.getItem('product_images') || '{}');
         images[idx] = e.target.result;
         localStorage.setItem('product_images', JSON.stringify(images));
         msg.className = 'message success';
         msg.textContent = 'Imagine incarcata!';
-        resetFileInput();
+        document.getElementById('image-input').value = '';
         displayProducts();
       };
+      
       reader.onerror = () => {
+        console.error('FileReader error');
         msg.className = 'message error';
         msg.textContent = 'Error reading file!';
       };
+      
       reader.readAsDataURL(file);
     }
 
