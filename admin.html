@@ -143,8 +143,8 @@
         images[idx] = e.target.result;
         localStorage.setItem('product_images', JSON.stringify(images));
         showMessage('Imagine incarcata!', 'success');
-    const fileInput = document.getElementById('image-input'); const newInput = fileInput.cloneNode(true); fileInput.parentNode.replaceChild(newInput,
-                                                                                                                                                displayProducts();fileInput);        displayProducts();
+            const inp = document.getElementById('image-input'); inp.parentNode.replaceChild(inp.cloneNode(true), inp); displayProducts();
+        
       };
       
       reader.onerror = () => {
