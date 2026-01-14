@@ -66,19 +66,19 @@
     let products = [];
     let messageTimeout = null;
 
-    function login() {
-      const password = document.getElementById('admin-password').value;
-      if (password === ADMIN_PASSWORD) {
-    isLoggedIn = true;
-    localStorage.setItem('adminLogged', 'true');
-    document.getElementById('login-section').classList.add('hidden');
-    document.getElementById('admin-section').classList.remove('hidden');
-    loadProducts();
-  } else {
-    const msg = document.getElementById('login-message');
-    msg.className = 'message error';
-    msg.textContent = 'Parola incorecta!';
-  }
+function login() {
+    const password = document.getElementById('admin-password').value;
+    if (password === ADMIN_PASSWORD) {
+      isLoggedIn = true;
+      localStorage.setItem('adminLogged', 'true');
+      document.getElementById('login-section').classList.add('hidden');
+      document.getElementById('admin-section').classList.remove('hidden');
+      displayProducts();
+    } else {
+      const msg = document.getElementById('login-message');
+      msg.className = 'message error';
+      msg.textContent = 'Parola incorecta!';
+    }
 
     function logout() {
       isLoggedIn = false;
